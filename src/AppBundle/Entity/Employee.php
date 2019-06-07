@@ -1,0 +1,234 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
+/**
+ * Employee
+ *
+ * @ORM\Table(name="employee")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EmployeeRepository")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorMap({"employee" = "Employee", "developer" = "Developer","designer" = "Designer"})
+ */
+class Employee
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Groups({"developer_index", "designer_index","enterprise_index"})
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     * @JMS\Groups({"developer_index", "designer_index","enterprise_index"})
+     * @Assert\NotBlank(message="Name is required")
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="last_name", type="string", length=255)
+     * @JMS\Groups({"developer_index", "designer_index","enterprise_index"})
+     * @Assert\NotBlank(message="LastName is required")
+     */
+    private $lastName;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="birth_date", type="date")
+     * @JMS\Groups({"developer_index", "designer_index","enterprise_index"})
+     * @Assert\NotBlank(message="Birth date is required")
+     */
+    private $birth_date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     * @JMS\Groups({"developer_index", "designer_index","enterprise_index"})
+     * @Assert\NotBlank(message="Email is required")
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", length=255)
+     * @JMS\Groups({"developer_index", "designer_index","enterprise_index"})
+     * @Assert\NotBlank(message="Phone is required")
+     */
+    private $phone;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Enterprise", inversedBy="employee")
+     * @ORM\JoinColumn(name="enterprise", referencedColumnName="id")
+     * @JMS\Groups({"developer_index", "designer_index","enterprise_index"})
+     */
+    private $enterprise;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Employee
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     *
+     * @return Employee
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Employee
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     *
+     * @return Employee
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set enterprise
+     *
+     * @param \AppBundle\Entity\Enterprise $enterprise
+     *
+     * @return Employee
+     */
+    public function setEnterprise(\AppBundle\Entity\Enterprise $enterprise = null)
+    {
+        $this->enterprise = $enterprise;
+
+        return $this;
+    }
+
+    /**
+     * Get enterprise
+     *
+     * @return \AppBundle\Entity\Enterprise
+     */
+    public function getEnterprise()
+    {
+        return $this->enterprise;
+    }
+
+    /**
+     * Set birthDate
+     *
+     * @param \DateTime $birthDate
+     *
+     * @return Employee
+     */
+    public function setBirthDate($birthDate)
+    {
+        $this->birth_date = $birthDate;
+
+        return $this;
+    }
+
+    /**
+     * Get birthDate
+     *
+     * @return \DateTime
+     */
+    public function getBirthDate()
+    {
+        return $this->birth_date;
+    }
+}
