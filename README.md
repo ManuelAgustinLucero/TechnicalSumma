@@ -20,7 +20,7 @@ Database mysql.
 ## Setting Environment
 When the composer installation is finished
 ```
-    $ php bin/console doctrine:schema:create
+    $ php bin/console doctrine:database:create
     $ php bin/console doctrine:schema:update --force
     $ You can config database in app/config/parameters.yml
 
